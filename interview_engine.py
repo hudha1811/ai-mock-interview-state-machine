@@ -1,1 +1,6 @@
+current_state
+score
+stress_level
+weak_streak
+question_count
 
