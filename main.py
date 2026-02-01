@@ -1,8 +1,10 @@
+
 # main.py
 
 from states import START, EASY, MEDIUM, HARD, WARNING, TERMINATED, COMPLETED
 from interview_engine import evaluate_answer, get_next_state, get_final_feedback
-from data.questions import QUESTIONS
+from questions import QUESTIONS
+
 import random
 import time
 
@@ -61,4 +63,3 @@ def run_interview():
 
 if __name__ == "__main__":
     run_interview()
-
