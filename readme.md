@@ -137,13 +137,15 @@ At the end of the interview, the system generates:
 
 ## ▶️ How to Run
 
-```bash
-python main.py
+Run the interview simulation using the command below.
+
+Command to execute:
+    python main.py
+
 ---
 
 ## 👩‍💻 Author
 
-**Hudha A**  
+**Hudha Ashraf**  
 Computer Science & Engineering Student  
-Participant – Hack2Hire: AI-Powered Interview Hackathon  
-
+Participant – Hack2Hire: AI-Powered Interview Hackathon 
