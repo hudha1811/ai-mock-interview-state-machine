@@ -1,6 +1,7 @@
 # interview_engine.py
 
 from states import EASY, MEDIUM, HARD, WARNING, TERMINATED, COMPLETED
+from questions import QUESTIONS
 
 # ==============================
 # SCORING & STRESS CONSTANTS
@@ -18,85 +19,51 @@ WARNING_STRESS_THRESHOLD = 65
 TERMINATION_STRESS_THRESHOLD = 85
 
 
-# ==============================
-# EVALUATE ANSWER 
-# ==============================
-
 def evaluate_answer(answer_quality, score, stress):
-    """
-    Updates score and stress based on answer quality
-    """
     if answer_quality == "good":
         score += GOOD_SCORE
         stress += GOOD_STRESS
     elif answer_quality == "average":
         score += AVERAGE_SCORE
         stress += AVERAGE_STRESS
-    else:  # bad
+    else:
         score += BAD_SCORE
         stress += BAD_STRESS
 
-    # Clamp stress between 0 and 100
     stress = max(0, min(100, stress))
-
     return score, stress
 
 
-# ==============================
-# STATE TRANSITION LOGIC
-# ==============================
-
 def get_next_state(current_state, answer_quality, stress):
-    """
-    Determines next interview state based on current state,
-    answer quality, and stress level
-    """
 
-    # Immediate termination due to extreme stress
     if current_state == WARNING and stress >= TERMINATION_STRESS_THRESHOLD:
         return TERMINATED
 
-    # Stress-based warning
     if stress >= WARNING_STRESS_THRESHOLD:
         return WARNING
 
     if current_state == EASY:
-        if answer_quality == "good":
-            return MEDIUM
-        else:
-            return EASY
+        return MEDIUM if answer_quality == "good" else EASY
 
     if current_state == MEDIUM:
         if answer_quality == "good":
             return HARD
         elif answer_quality == "bad":
             return EASY
-        else:
-            return MEDIUM
+        return MEDIUM
 
     if current_state == HARD:
         if answer_quality == "good" and stress < 40:
             return COMPLETED
-        else:
-            return MEDIUM
+        return MEDIUM
 
     if current_state == WARNING:
-        if answer_quality == "good":
-            return MEDIUM
-        else:
-            return TERMINATED
+        return MEDIUM if answer_quality == "good" else TERMINATED
 
     return current_state
 
 
-# ==============================
-# FINAL RESULT EVALUATION
-# ==============================
-
 def get_final_feedback(score, stress):
-    """
-    Generates final interview result and feedback
-    """
     if score >= 70:
         category = "Strong"
     elif score >= 40:
@@ -121,3 +88,60 @@ def get_final_feedback(score, stress):
     return category, feedback
 
 
+def run_interview(return_logs=False):
+
+    current_state = EASY
+    score = 0
+    stress = 0
+    logs = []
+
+    print("\n🎤 AI Mock Interview Started")
+    print("----------------------------------")
+
+    while current_state not in [TERMINATED, COMPLETED]:
+
+        question = QUESTIONS[current_state][0]
+        answer_quality = question["answer_quality"]
+
+        print(f"\n📍 Current State: {current_state}")
+        print(f"📊 Score: {score} | 😰 Stress: {stress}")
+        print(f"\n❓ Question: {question['text']}")
+        print(f"📝 Answer Quality: {answer_quality.upper()}")
+
+        score, stress = evaluate_answer(answer_quality, score, stress)
+        next_state = get_next_state(current_state, answer_quality, stress)
+
+        print(f"🔁 Transition: {current_state} → {next_state}")
+
+        logs.append({
+            "state": current_state,
+            "score": score,
+            "stress": stress,
+            "question": question["text"],
+            "answer": answer_quality.upper()
+        })
+
+        current_state = next_state
+
+        if current_state == TERMINATED:
+            print("\n⚠️ Interview terminated due to high stress.")
+            break
+
+    category, feedback = get_final_feedback(score, stress)
+
+    print("\n==================================")
+    print("🛑 Interview Ended")
+    print("==================================")
+    print(f"\n✅ Final Interview Readiness Score: {score}")
+    print(f"📌 Category: {category}")
+    print("\n📋 Feedback:")
+    for f in feedback:
+        print(f"- {f}")
+
+    if return_logs:
+        return {
+            "final_score": score,
+            "category": category,
+            "feedback": feedback,
+            "logs": logs
+        }
