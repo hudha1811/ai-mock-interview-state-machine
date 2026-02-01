@@ -135,27 +135,15 @@ At the end of the interview, the system generates:
 
 ---
 
-## 📂 Project Structure
-
-ai-mock-interview/
-├── main.py # Interview execution flow
-├── interview_engine.py # Core logic (scoring, stress, state transitions)
-├── states.py # State definitions
-├── data/
-│ └── questions.py # Difficulty-based question bank
-├── README.md
-└── requirements.txt
-
-
----
-
 ## ▶️ How to Run
 
 ```bash
 python main.py
 ---
-##Author
 
-Hudha Ashraf
-Hack2Hire: AI-Powered Interview Hackathon
-Computer Science & Engineering
+## 👩‍💻 Author
+
+**Hudha A**  
+Computer Science & Engineering Student  
+Participant – Hack2Hire: AI-Powered Interview Hackathon  
+
