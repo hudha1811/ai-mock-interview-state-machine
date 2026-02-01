@@ -131,6 +131,7 @@ At the end of the interview, the system generates:
 - **Language:** Python
 - **Architecture:** Rule-based finite state machine
 - **Interface:** Command Line Interface (CLI)
+-Streamlit: Interactive web interface for better UX
 - **Dependencies:** None (lightweight & portable)
 
 ---
@@ -141,6 +142,9 @@ Run the interview simulation using the command below.
 
 Command to execute:
     python main.py
+     in the terminal:streamlit run app.py
+     (Opens a web app where candidates can answer questions and see real-time stress & score tracking.)
+
 
 ---
 
