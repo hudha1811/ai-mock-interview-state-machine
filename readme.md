@@ -146,6 +146,6 @@ Command to execute:
 
 ## 👩‍💻 Author
 
-**Hudha Ashraf**  
+**Hudha**  
 Computer Science & Engineering Student  
 Participant – Hack2Hire: AI-Powered Interview Hackathon 
